@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
             gameEngine.canMove(0,-1);
         }
     };
-
     View.OnClickListener listenerDown = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
