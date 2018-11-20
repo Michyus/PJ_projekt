@@ -40,7 +40,7 @@ public class Graphics extends View {
             loadAndCreateBitmaps();
         }
 
-        drawGrid(canvas);
+        //drawGrid(canvas);
         drawBitmaps(canvas);
 
         invalidate();
