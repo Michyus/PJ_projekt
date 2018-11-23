@@ -47,7 +47,6 @@ public class Graphics extends View {
     }
 
     private void loadAndCreateBitmaps(){
-        //TODO nacist a zmensit/zvetsit bitmapy
         // Load bitmaps
         bitmapFloor = BitmapFactory.decodeResource(this.getResources(), R.drawable.floor);
         bitmapWall = BitmapFactory.decodeResource(this.getResources(), R.drawable.wall);
@@ -66,7 +65,6 @@ public class Graphics extends View {
     }
 
     private void drawBitmaps(Canvas canvas){
-        //TODO projit level/pole a vykreslit bitmapy
         for (int x = 0; x < gameEngine.getGridNumber(); x++){
             for (int y = 0; y < gameEngine.getGridNumber(); y++){
                 Bitmap tempBitmap = null;

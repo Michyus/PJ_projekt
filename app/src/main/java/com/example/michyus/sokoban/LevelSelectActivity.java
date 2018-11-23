@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 public class LevelSelectActivity extends AppCompatActivity {
 
+    private int[][] level;
+
     private ListView listViewLevels;
     private Button btntestLevel;
 

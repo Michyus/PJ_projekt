@@ -2,6 +2,13 @@ package com.example.michyus.sokoban;
 
 import android.app.Activity;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Scanner;
+
+
 public class GameEngine {
     private final static int GRID_NUMBER = 10;
 
@@ -9,31 +16,9 @@ public class GameEngine {
 
     private float gridSize = 0;
 
-    private int[][] level = new int[][]{
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 2, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 1, 1, 1, 0, 0, 1},
-            {1, 0, 2, 0, 1, 4, 4, 0, 0, 1},
-            {1, 0, 2, 0, 1, 4, 4, 5, 0, 1},
-            {1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-            {1, 0, 2, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-    };
+    private int[][] level = new int[10][10];
 
-    private int[][] levelBackup = new int[][]{
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 2, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 1, 1, 1, 0, 0, 1},
-            {1, 0, 2, 0, 1, 4, 4, 0, 0, 1},
-            {1, 0, 2, 0, 1, 4, 4, 5, 0, 1},
-            {1, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-            {1, 0, 2, 0, 0, 0, 0, 0, 0, 1},
-            {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-    };
+    private int[][] levelBackup = new int[10][10];
 
     int posX = 7;
     int posY = 5;
@@ -41,7 +26,51 @@ public class GameEngine {
 
     public GameEngine(Activity gameActivity){
         this.gameActivity = gameActivity;
+        parseLevel();
+    }
 
+    public void parseLevel(){
+        char[][] arrChar = readFileToArray();
+
+        for (int row = 0; row < 10; row++){
+            for (int col = 0; col < 10; col++){
+                this.levelBackup[row][col] = Character.getNumericValue(arrChar[row][col]);
+                this.level[row][col] = Character.getNumericValue(arrChar[row][col]);
+            }
+        }
+    }
+
+    public char[][] readFileToArray(){
+        int totalRow = 10;
+        int totalColumn = 10;
+        char[][] myArray = new char[totalRow][totalColumn];
+        Scanner scanner = new Scanner(this.gameActivity.getResources().openRawResource(R.raw.lvl));
+
+
+        for (int row = 0; scanner.hasNextLine() && row < totalRow; row++) {
+            char[] chars = scanner.nextLine().toCharArray();
+            for (int i = 0; i < totalColumn && i < chars.length; i++) {
+                myArray[row][i] = chars[i];
+            }
+        }
+
+        return myArray;
+    }
+
+    public String readFileToString() throws IOException
+    {
+        InputStream is = this.gameActivity.getResources().openRawResource(R.raw.level);
+        BufferedReader buf = new BufferedReader(new InputStreamReader(is));
+
+        String line = buf.readLine();
+        StringBuilder sb = new StringBuilder();
+
+        while(line != null){
+            sb.append(line).append("\n");
+            line = buf.readLine();
+        }
+
+        return sb.toString();
     }
 
     public int getGridNumber(){
