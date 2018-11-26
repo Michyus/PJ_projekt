@@ -40,7 +40,6 @@ public class Graphics extends View {
             loadAndCreateBitmaps();
         }
 
-        //drawGrid(canvas);
         drawBitmaps(canvas);
 
         invalidate();
@@ -90,16 +89,6 @@ public class Graphics extends View {
                 if(tempBitmap != null)
                     canvas.drawBitmap(tempBitmap,sizeOfElement * x,sizeOfElement * y, mPaint);
             }
-        }
-    }
-
-    private void drawGrid(Canvas canvas) {
-        for (int i = 0; i <= gameEngine.getGridNumber(); i++){
-            // Horizontal line
-            canvas.drawLine(0,sizeOfElement * i, gameEngine.getGridSize(),sizeOfElement * i, mPaint);
-
-            // Vertical line
-            canvas.drawLine(sizeOfElement * i,0,sizeOfElement * i, gameEngine.getGridSize(), mPaint);
         }
     }
 }

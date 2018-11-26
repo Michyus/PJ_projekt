@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -20,57 +22,49 @@ public class GameEngine {
 
     private int[][] levelBackup = new int[10][10];
 
-    int posX = 7;
-    int posY = 5;
+    List<int[][]> levels = new ArrayList<int[][]>(10);
+
+    int posX = 0;
+    int posY = 0;
 
 
     public GameEngine(Activity gameActivity){
         this.gameActivity = gameActivity;
-        parseLevel();
+        parseLevel(1);
     }
 
-    public void parseLevel(){
-        char[][] arrChar = readFileToArray();
+    public void parseLevel(int index){
+        readFileToArray();
+
+        this.level = this.levels.get(index);
+        this.levelBackup = this.levels.get(index);
 
         for (int row = 0; row < 10; row++){
             for (int col = 0; col < 10; col++){
-                this.levelBackup[row][col] = Character.getNumericValue(arrChar[row][col]);
-                this.level[row][col] = Character.getNumericValue(arrChar[row][col]);
+                if (level[row][col] == 5){
+                    this.posX = col;
+                    this.posY = row;
+                }
             }
         }
     }
 
-    public char[][] readFileToArray(){
-        int totalRow = 10;
-        int totalColumn = 10;
-        char[][] myArray = new char[totalRow][totalColumn];
+    private void readFileToArray(){
         Scanner scanner = new Scanner(this.gameActivity.getResources().openRawResource(R.raw.lvl));
 
+        while (scanner.hasNextLine()){
+            int totalRow = 10;
+            int totalColumn = 10;
+            int[][] myArray = new int[totalRow][totalColumn];
 
-        for (int row = 0; scanner.hasNextLine() && row < totalRow; row++) {
-            char[] chars = scanner.nextLine().toCharArray();
-            for (int i = 0; i < totalColumn && i < chars.length; i++) {
-                myArray[row][i] = chars[i];
+            for (int row = 0; scanner.hasNextLine() && row < totalRow; row++) {
+                char[] chars = scanner.nextLine().toCharArray();
+                for (int i = 0; i < totalColumn && i < chars.length; i++) {
+                    myArray[row][i] = Character.getNumericValue(chars[i]);
+                }
             }
+            this.levels.add(myArray);
         }
-
-        return myArray;
-    }
-
-    public String readFileToString() throws IOException
-    {
-        InputStream is = this.gameActivity.getResources().openRawResource(R.raw.level);
-        BufferedReader buf = new BufferedReader(new InputStreamReader(is));
-
-        String line = buf.readLine();
-        StringBuilder sb = new StringBuilder();
-
-        while(line != null){
-            sb.append(line).append("\n");
-            line = buf.readLine();
-        }
-
-        return sb.toString();
     }
 
     public int getGridNumber(){
