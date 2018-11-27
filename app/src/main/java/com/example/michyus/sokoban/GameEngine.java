@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class GameEngine {
     private final static int GRID_NUMBER = 10;
 
@@ -22,22 +21,21 @@ public class GameEngine {
 
     private int[][] levelBackup = new int[10][10];
 
-    List<int[][]> levels = new ArrayList<int[][]>(10);
+    List<int[][]> levels = new ArrayList<>();
 
-    int posX = 0;
-    int posY = 0;
+    int posX = 5;
+    int posY = 7;
 
-
-    public GameEngine(Activity gameActivity){
+    public GameEngine(Activity gameActivity, int levelIndex){
         this.gameActivity = gameActivity;
-        parseLevel(1);
+        parseLevel(levelIndex);
     }
 
     public void parseLevel(int index){
         readFileToArray();
 
-        this.level = this.levels.get(index);
         this.levelBackup = this.levels.get(index);
+        System.arraycopy( this.levelBackup, 0, this.level, 0, this.levelBackup.length );
 
         for (int row = 0; row < 10; row++){
             for (int col = 0; col < 10; col++){
@@ -111,7 +109,6 @@ public class GameEngine {
             } else {
                 level[y + dirY * 2][x + dirX * 2] = 2;
             }
-
             return true;
         }
         return false;

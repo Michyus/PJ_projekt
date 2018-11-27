@@ -1,5 +1,6 @@
 package com.example.michyus.sokoban;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,11 +18,19 @@ public class MainActivity extends AppCompatActivity {
     private Button btnRight;
     private Button btnLeft;
 
+    private int id = 0;
+    private String name = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        gameEngine = new GameEngine(this);
+
+        Intent intent = getIntent();
+        id = intent.getIntExtra("id", 0);
+        name = intent.getStringExtra("name");
+
+        gameEngine = new GameEngine(this, id);
 
         gameFrame = findViewById(R.id.gameFrame);
 
