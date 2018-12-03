@@ -23,8 +23,8 @@ public class GameEngine {
 
     List<int[][]> levels = new ArrayList<>();
 
-    int posX = 5;
-    int posY = 7;
+    int posX = 0;
+    int posY = 0;
 
     public GameEngine(Activity gameActivity, int levelIndex){
         this.gameActivity = gameActivity;

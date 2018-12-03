@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         btnLeft.setOnClickListener(listenerLeft);
 
         gameFrame.addView(new Graphics(this, gameEngine));
-        gameFrame.setOnTouchListener(new TouchListener(gameEngine));
     }
 
     View.OnClickListener listenerUp = new View.OnClickListener() {

@@ -1,6 +1,7 @@
 package com.example.michyus.sokoban;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,13 +22,13 @@ public class LevelSelectActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_level_select);
 
         final ArrayList<String> arrayList=new ArrayList<>();
 
         listViewLevels = findViewById(R.id.listViewLevels);
 
-        //Add elements to arraylist
         arrayList.add("First");
         arrayList.add("Second");
         arrayList.add("Third");
@@ -43,13 +44,10 @@ public class LevelSelectActivity extends AppCompatActivity {
         arrayList.add("-");
         arrayList.add("Last");
 
-        //Create Adapter
         ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,arrayList);
 
-        //assign adapter to listview
         listViewLevels.setAdapter(arrayAdapter);
 
-        //add listener to listview
         listViewLevels.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -59,7 +57,5 @@ public class LevelSelectActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
     }
 }
